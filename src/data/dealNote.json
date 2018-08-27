@@ -1,0 +1,180 @@
+[
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-5-15",
+    "buyPrice" : 0.896
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-5-16",
+    "buyPrice" : 0.893
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-5-25",
+    "buyPrice" : 0.869
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-5-30",
+    "buyPrice" : 0.843
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-08",
+    "buyPrice" : 0.818
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-19",
+    "buyPrice" : 0.793
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-6-19",
+    "buyPrice" : 0.793
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-19",
+    "buyPrice" : 0.765
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-6-19",
+    "buyPrice" : 0.793
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-20",
+    "buyPrice" : 0.746,
+    "sellDate" : "2018-7-24",
+    "sellPrice" : 0.769
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-6-20",
+    "buyPrice" : 0.746
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-21",
+    "buyPrice" : 0.724,
+    "sellDate" : "2018-6-28",
+    "sellPrice" : 0.746
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-6-21",
+    "buyPrice" : 0.724
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-25",
+    "buyPrice" : 0.724,
+    "sellDate" : "2018-6-28",
+    "sellPrice" : 0.746
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-6-25",
+    "buyPrice" : 0.724,
+    "sellDate" : "2018-6-28",
+    "sellPrice" : 0.746
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-7-05",
+    "buyPrice" : 0.724,
+    "sellDate" : "2018-7-10",
+    "sellPrice" : 0.746
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-7-05",
+    "buyPrice" : 0.724
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-7-11",
+    "buyPrice" : 0.724,
+    "sellDate" : "2018-7-12",
+    "sellPrice" : 0.746
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-7-11",
+    "buyPrice" : 0.724
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-7-19",
+    "buyPrice" : 0.724,
+    "sellDate" : "2018-7-20",
+    "sellPrice" : 0.746
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-7-19",
+    "buyPrice" : 0.724
+  },
+  {
+    "type" : 1,
+    "amount" : 200,
+    "buyDate" : "2018-8-1",
+    "buyPrice" : 0.746
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-8-2",
+    "buyPrice" : 0.717
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-8-2",
+    "buyPrice" : 0.717
+  },
+  {
+    "type" : 1,
+    "amount" : 100,
+    "buyDate" : "2018-8-6",
+    "buyPrice" : 0.702,
+    "sellDate" : "2018-8-9",
+    "sellPrice" : 0.724
+  },
+  {
+    "type" : 2,
+    "amount" : 100,
+    "buyDate" : "2018-8-6",
+    "buyPrice" : 0.702
+  },
+  {
+    "type" : 1,
+    "amount" : 200,
+    "buyDate" : "2018-8-16",
+    "buyPrice" : 0.702
+  }
+]

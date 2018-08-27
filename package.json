@@ -1,0 +1,18 @@
+{
+  "name": "grid-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "sh.shen",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "serve": "node dist/index.js"
+  },
+  "devDependencies": {
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "typescript": "^3.0.1"
+  }
+}
