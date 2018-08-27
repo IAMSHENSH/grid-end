@@ -71,6 +71,6 @@ router.get('/getNextGridPrice', async (ctx, next) => {
 
 app.use(router.routes());
 
-app.listen(3000);
-
-console.log('Server running on port 3000');
+const HTTP_PORT = 8080;
+app.listen(HTTP_PORT);
+console.log('Server running on port ' + HTTP_PORT);
