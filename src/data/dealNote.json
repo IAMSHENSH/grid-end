@@ -175,6 +175,8 @@
     "type" : 1,
     "amount" : 200,
     "buyDate" : "2018-8-16",
-    "buyPrice" : 0.702
+    "buyPrice" : 0.702,
+    "sellDate" : "2018-8-27",
+    "sellPrice" : 0.728
   }
 ]
