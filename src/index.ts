@@ -75,4 +75,4 @@ app.use(router.routes());
 
 const HTTP_PORT = 8080;
 app.listen(HTTP_PORT);
-console.log('Server running on port ' + HTTP_PORT);
+console.log('Server running http://132.232.142.128 on port ' + HTTP_PORT);
