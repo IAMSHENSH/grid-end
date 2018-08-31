@@ -7,6 +7,7 @@ console.log(_grid_.getNextGridPrice());
 
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
+import * as cors from 'koa2-cors';
 import * as bodyParser from 'koa-bodyparser';
 
 const app = new Koa();
@@ -20,6 +21,7 @@ app.use(async (ctx, next) => {
 
 // parse request body:
 app.use(bodyParser());
+app.use(cors());
 
 // add url-route:
 /** 样例代码 */
