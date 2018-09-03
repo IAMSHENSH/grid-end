@@ -1,9 +1,9 @@
 // import num = require("./grid");
-import _grid_ from "./grid";
-console.log(_grid_.getLevelPrice());
-console.log(_grid_.getThisGrid());
-console.log(_grid_.getGridSellPrice());
-console.log(_grid_.getNextGridPrice());
+import _grid_ from "./grid-db";
+// console.log(_grid_.getLevelPrice());
+// console.log(_grid_.getThisGrid());
+// console.log(_grid_.getGridSellPrice());
+// console.log(_grid_.getNextGridPrice());
 
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
@@ -57,6 +57,9 @@ router.post('/signin', async (ctx, next) => {
 
 router.get('/getLevelPrice', async (ctx, next) => {
     ctx.response.body = _grid_.getLevelPrice();
+});
+router.get('/getAllGrid', async (ctx, next) => {
+    ctx.response.body = _grid_.getAllGrid();
 });
 router.get('/getThisGrid', async (ctx, next) => {
     ctx.response.body = _grid_.getThisGrid();
