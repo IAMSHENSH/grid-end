@@ -59,16 +59,24 @@ router.get('/getLevelPrice', async (ctx, next) => {
     ctx.response.body = _grid_.getLevelPrice();
 });
 router.get('/getAllGrid', async (ctx, next) => {
-    ctx.response.body = _grid_.getAllGrid();
+    await _grid_.getAllGrid().then(function(data){
+        ctx.response.body = data;
+    });
 });
 router.get('/getThisGrid', async (ctx, next) => {
-    ctx.response.body = _grid_.getThisGrid();
+    await _grid_.getThisGrid().then(function(data){
+        ctx.response.body = data;
+    });
 });
 router.get('/getGridSellPrice', async (ctx, next) => {
-    ctx.response.body = _grid_.getGridSellPrice();
+    await _grid_.getGridSellPrice().then(function(data){
+        ctx.response.body = data;
+    });
 });
 router.get('/getNextGridPrice', async (ctx, next) => {
-    ctx.response.body = _grid_.getNextGridPrice();
+    await _grid_.getNextGridPrice().then(function(data){
+        ctx.response.body = data;
+    });
 });
 
 
