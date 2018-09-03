@@ -80,41 +80,8 @@ function getNextGridPrice(grid: Grid): number {
 	// return (grid.buyPrice) * (1 - 0.03);
 }
 
-MongoClient.connect(bdUrl, function (err, db) {
-	if (err) throw err;
-	const dbo = db.db(dbName);
-	let findStr = {'type':1};
-	dbo.collection("grid").find(findStr).toArray(function (err, result) {
-		if (err) throw err;
-		let dealData: Grid[] = [];
-		for (let i = 0; i < result.length; i++) {
-			let item: Grid = {
-				type: result[i].type,
-				amount: result[i].amount,
-				buyPrice: result[i].buyPrice,
-				buyDate: new Date(result[i].buyDate),
-				sellPrice: result[i].sellPrice,
-				sellDate: new Date(result[i].sellDate)
-			};
-			dealData.push(item);
-		};
-		db.close();
-		let minGrid = dealData[0];
-		for(let i = 0 ; i < dealData.length ; i++) {
-			if (dealData[i].buyPrice < minGrid.buyPrice){
-				minGrid = dealData[i];
-			}
-		}
-		console.info('minGrid:',minGrid);
-	});
-});
-
-
-
 
 //todo 2.  录入网格
-
-
 
 // 打印所有网格
 // console.info(dealData);
@@ -152,7 +119,6 @@ let grid = {
 	},
 	/** 当前网格 */
 	getThisGrid: function () {
-		// return minGrid;
 		MongoClient.connect(bdUrl, function (err, db) {
 			if (err) throw err;
 			const dbo = db.db(dbName);
@@ -185,10 +151,66 @@ let grid = {
 	/** 出货价格 */
 	getGridSellPrice: function () {
 		// return gridSellPrice(minGrid);
+		MongoClient.connect(bdUrl, function (err, db) {
+			if (err) throw err;
+			const dbo = db.db(dbName);
+			let findStr = {'type':1};
+			dbo.collection("grid").find(findStr).toArray(function (err, result) {
+				if (err) throw err;
+				let dealData: Grid[] = [];
+				for (let i = 0; i < result.length; i++) {
+					let item: Grid = {
+						type: result[i].type,
+						amount: result[i].amount,
+						buyPrice: result[i].buyPrice,
+						buyDate: new Date(result[i].buyDate),
+						sellPrice: result[i].sellPrice,
+						sellDate: new Date(result[i].sellDate)
+					};
+					dealData.push(item);
+				};
+				db.close();
+				let minGrid = dealData[0];
+				for(let i = 0 ; i < dealData.length ; i++) {
+					if (dealData[i].buyPrice < minGrid.buyPrice){
+						minGrid = dealData[i];
+					}
+				}
+				return gridSellPrice(minGrid);
+			});
+		});		
 	},
 	/** 入货价格 */
 	getNextGridPrice: function () {
 		// return getNextGridPrice(minGrid);
+		MongoClient.connect(bdUrl, function (err, db) {
+			if (err) throw err;
+			const dbo = db.db(dbName);
+			let findStr = {'type':1};
+			dbo.collection("grid").find(findStr).toArray(function (err, result) {
+				if (err) throw err;
+				let dealData: Grid[] = [];
+				for (let i = 0; i < result.length; i++) {
+					let item: Grid = {
+						type: result[i].type,
+						amount: result[i].amount,
+						buyPrice: result[i].buyPrice,
+						buyDate: new Date(result[i].buyDate),
+						sellPrice: result[i].sellPrice,
+						sellDate: new Date(result[i].sellDate)
+					};
+					dealData.push(item);
+				};
+				db.close();
+				let minGrid = dealData[0];
+				for(let i = 0 ; i < dealData.length ; i++) {
+					if (dealData[i].buyPrice < minGrid.buyPrice){
+						minGrid = dealData[i];
+					}
+				}
+				return getNextGridPrice(minGrid);
+			});
+		});		
 	}
 
 }
