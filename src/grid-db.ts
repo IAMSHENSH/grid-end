@@ -101,18 +101,7 @@ let grid = {
 				let emptyStr = {};
 				dbo.collection("grid").find(emptyStr).toArray(function (err, result) {
 					if (err) throw err;
-					let dealData: Grid[] = [];
-					for (let i = 0; i < result.length; i++) {
-						let item: Grid = {
-							type: result[i].type,
-							amount: result[i].amount,
-							buyPrice: result[i].buyPrice,
-							buyDate: new Date(result[i].buyDate),
-							sellPrice: result[i].sellPrice,
-							sellDate: new Date(result[i].sellDate)
-						};
-						dealData.push(item);
-					};
+          let dealData: Grid[] = result || [];
 					db.close();
 					resolve(dealData);
 				});
@@ -128,22 +117,11 @@ let grid = {
 				let findStr = {'type':1};
 				dbo.collection("grid").find(findStr).toArray(function (err, result) {
 					if (err) throw err;
-					let dealData: Grid[] = [];
-					for (let i = 0; i < result.length; i++) {
-						let item: Grid = {
-							type: result[i].type,
-							amount: result[i].amount,
-							buyPrice: result[i].buyPrice,
-							buyDate: new Date(result[i].buyDate),
-							sellPrice: result[i].sellPrice,
-							sellDate: new Date(result[i].sellDate)
-						};
-						dealData.push(item);
-					};
+          let dealData: Grid[] = result || [];
 					db.close();
 					let minGrid = dealData[0];
 					for(let i = 0 ; i < dealData.length ; i++) {
-						if (dealData[i].buyPrice < minGrid.buyPrice){
+						if (dealData[i].buyPrice < minGrid.buyPrice && dealData[i].sellPrice === undefined){
 							minGrid = dealData[i];
 						}
 					}
@@ -162,22 +140,11 @@ let grid = {
 				let findStr = {'type':1};
 				dbo.collection("grid").find(findStr).toArray(function (err, result) {
 					if (err) throw err;
-					let dealData: Grid[] = [];
-					for (let i = 0; i < result.length; i++) {
-						let item: Grid = {
-							type: result[i].type,
-							amount: result[i].amount,
-							buyPrice: result[i].buyPrice,
-							buyDate: new Date(result[i].buyDate),
-							sellPrice: result[i].sellPrice,
-							sellDate: new Date(result[i].sellDate)
-						};
-						dealData.push(item);
-					};
+					let dealData: Grid[] = result || [];
 					db.close();
 					let minGrid = dealData[0];
 					for(let i = 0 ; i < dealData.length ; i++) {
-						if (dealData[i].buyPrice < minGrid.buyPrice){
+						if (dealData[i].buyPrice < minGrid.buyPrice && dealData[i].sellPrice === undefined){
 							minGrid = dealData[i];
 						}
 					}
@@ -195,22 +162,11 @@ let grid = {
 				let findStr = {'type':1};
 				dbo.collection("grid").find(findStr).toArray(function (err, result) {
 					if (err) throw err;
-					let dealData: Grid[] = [];
-					for (let i = 0; i < result.length; i++) {
-						let item: Grid = {
-							type: result[i].type,
-							amount: result[i].amount,
-							buyPrice: result[i].buyPrice,
-							buyDate: new Date(result[i].buyDate),
-							sellPrice: result[i].sellPrice,
-							sellDate: new Date(result[i].sellDate)
-						};
-						dealData.push(item);
-					};
+					let dealData: Grid[] = result || [];
 					db.close();
 					let minGrid = dealData[0];
 					for(let i = 0 ; i < dealData.length ; i++) {
-						if (dealData[i].buyPrice < minGrid.buyPrice){
+						if (dealData[i].buyPrice < minGrid.buyPrice && dealData[i].sellPrice === undefined){
 							minGrid = dealData[i];
 						}
 					}
