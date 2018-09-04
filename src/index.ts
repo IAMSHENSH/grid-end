@@ -78,7 +78,16 @@ router.get('/getNextGridPrice', async (ctx, next) => {
         ctx.response.body = data;
     });
 });
-
+router.get('/getSellingGrid', async (ctx, next) => {
+    await _grid_.getSellingGrid().then(function(data){
+        ctx.response.body = data;
+    });
+});
+router.get('/getSellingGridChart', async (ctx, next) => {
+    await _grid_.getSellingGridChart().then(function(data){
+        ctx.response.body = data;
+    });
+});
 
 /** 业务代码-结束 */
 

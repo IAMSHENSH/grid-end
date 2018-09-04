@@ -7,18 +7,22 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
   <title>GRID TOOL</title>
+  <style>
+    .space-top{
+      margin-top: 0.6em;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="card">
+    <div class="card space-top">
       <h5 class="card-header">网格价格列表</h5>
       <div class="card-body">
         <p id="gridLevel"></p>
       </div>
     </div>
-    <p></p>
-    <div class="card">
+    <div class="card space-top">
       <h5 class="card-header">当前网格</h5>
       <div class="card-body">
         <p id="thisGridPrice">价格:</p>
@@ -26,16 +30,26 @@
         <p id="thisGridDate">日期:</p>
       </div>
     </div>
-    <p></p>
-    <div class="card">
+    <div class="card space-top">
       <h5 class="card-header">操作指南</h5>
       <div class="card-body">
         <p id="nextPrice">入货价格:</p>
         <p id="sellPrice">出货价格:</p>
       </div>
     </div>
-    <p></p>
-    <div class="card">
+    <div class="card space-top">
+      <h5 class="card-header">网格总览</h5>
+      <div class="card-body">
+        <!-- <div id="allGridChart" style="height: 300px;"></div> -->
+      </div>
+    </div>
+    <div class="card space-top">
+        <h5 class="card-header">待出货网格总览</h5>
+        <div class="card-body">
+          <div id="sellingGridChart" style="height: 500px;"></div>
+        </div>
+      </div>    
+    <div class="card space-top">
       <h5 class="card-header">入货操作</h5>
       <div class="card-body">
         <form>
@@ -44,13 +58,13 @@
             <input type="text" class="form-control" placeholder="输入入货价格">
           </div>
           <div class="form-group">
-              <label for="exampleInputEmail1">数量</label>
-              <input type="text" class="form-control" placeholder="输入入货数量">
+            <label for="exampleInputEmail1">数量</label>
+            <input type="text" class="form-control" placeholder="输入入货数量">
           </div>
           <div class="form-group">
-              <label for="exampleInputEmail1">时间</label>
-              <input type="text" class="form-control" placeholder="输入入货时间">
-          </div>          
+            <label for="exampleInputEmail1">时间</label>
+            <input type="text" class="form-control" placeholder="输入入货时间">
+          </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
@@ -62,13 +76,17 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
 <script>
   // const _ADDRESS_ = "http://132.232.142.128:8080"
   const _ADDRESS_ = "http://127.0.0.1:8080"
   // console.info('_ADDRESS_:' , _ADDRESS_);
 
-
-
+  // 待出货网格图表
+  let domSellingGridChart = document.getElementById("sellingGridChart");
+  let chartSellingGrid = echarts.init(domSellingGridChart);
+  
+  // chartSellingGrid.setOption(optionSellingGrid, true);
   $.get(_ADDRESS_ + '/getLevelPrice', function (data) {
     console.info('--> getLevelPrice: ', data);
     $("#gridLevel").text(data);
@@ -89,4 +107,76 @@
     let text = '入货价格: ' + data;
     $("#nextPrice").text(text);
   });
+  $.get(_ADDRESS_ + '/getAllGrid', function (data) {
+    // console.info('--> getAllGrid:  ', data);
+    // $("#allGrid").text(text);
+  });
+  
+  $.get(_ADDRESS_ + '/getSellingGrid', function (data) {
+    console.info('--> getSellingGrid:  ', data);
+    // $("#allGrid").text(text);
+  });
+
+  function drawChartSellingGrid() {
+    let domSellingGridChart = document.getElementById("sellingGridChart");
+    let chartSellingGrid = echarts.init(domSellingGridChart);
+    let optionSellingGrid = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { 
+          type: 'shadow' 
+        }
+      },
+      legend: {
+        data: ['价值网格', '常规网格']
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'value'
+      },
+      yAxis: {
+        type: 'category',
+        data: []
+      },
+      series: [{
+          name: '价值网格',
+          type: 'bar',
+          stack: '总量',
+          label: {
+            normal: {
+              show: false,
+              position: 'insideRight'
+            }
+          },
+          data: []
+        },
+        {
+          name: '常规网格',
+          type: 'bar',
+          stack: '总量',
+          label: {
+            normal: {
+              show: false,
+              position: 'insideRight'
+            }
+          },
+          data: []
+        },
+      ]
+    };
+    $.get(_ADDRESS_ + '/getSellingGridChart', function (data) {
+      console.info('--> getSellingGridChart: ', data);
+      optionSellingGrid.yAxis.data = data.yData;
+      optionSellingGrid.series[0].data = data.commonData;
+      optionSellingGrid.series[1].data = data.worthData;
+      chartSellingGrid.setOption(optionSellingGrid, true);
+    });
+  };
+  drawChartSellingGrid();
+
 </script>

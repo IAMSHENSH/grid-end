@@ -1,6 +1,13 @@
 var MongoClient = require('mongodb').MongoClient;
+// var _reverse_ = require('lodash.reverse');
+import * as _ from 'lodash';
+
+
 const bdUrl = 'mongodb://127.0.0.1:27017/';
 const dbName = 'griddb';
+
+
+
 
 /**
  * 网格类接口
@@ -23,10 +30,11 @@ interface Grid {
 // 网格规则 - 价格约定
 const basePrice: number = 0.953;
 let levelPrice: number[] = [basePrice];
-for (let i = 0; i < 15; i++) {
+for (let i = 0; i < 12; i++) {
 	let item = levelPrice[i] * (1 - 0.03);
 	levelPrice.push(Number(item.toFixed(3)));
 }
+// _.reverse(levelPrice);
 // console.info("参考价格：" , levelPrice);
 
 /**
@@ -50,7 +58,20 @@ function gridState(grid: Grid): number {
 		return 1;
 	}
 }
-
+/**
+ * 计算格子当前价格等级
+ * @param {Grid} grid
+ * @return {number}
+ */
+function gridLevelPrice(grid: Grid): number {
+	for (let i = 0; i < levelPrice.length; i++) {
+		if (grid.buyPrice > levelPrice[i]) {
+			return levelPrice[i - 1];
+		}
+	}
+	return -1;
+	// return (grid.buyPrice) * (1 + 0.03);
+}
 /**
  * 计算格子出货价格
  * @param {Grid} grid
@@ -174,7 +195,61 @@ let grid = {
 				});
 			});
 		})		
-	}
+  },
+  /** 获取待出货网格 */
+	getSellingGrid: function () {
+		return new Promise(function(resolve, reject ){
+			MongoClient.connect(bdUrl,{ useNewUrlParser: true }, function (err, db) {
+				if (err) throw err;
+				const dbo = db.db(dbName);
+        let findStr = {'sellPrice':undefined};
+				dbo.collection("grid").find(findStr).toArray(function (err, result) {
+					if (err) throw err;
+          let dealData: Grid[] = result || [];
+					db.close();
+					resolve(dealData);
+				});
+			});
+		})
+  },
+  /** 获取待出货网格图标数据 */
+  getSellingGridChart:function () {
+    return new Promise(function(resolve, reject ){
+			MongoClient.connect(bdUrl,{ useNewUrlParser: true }, function (err, db) {
+				if (err) throw err;
+				const dbo = db.db(dbName);
+        let findStr = {'sellPrice':undefined};
+				dbo.collection("grid").find(findStr).toArray(function (err, result) {
+					if (err) throw err;
+          let dealData: Grid[] = result || [];
+          db.close();
+          
+          /** 数据处理 **/
+          let chartData = {
+            yData:[],
+            commonData:[] = _.fill(Array(levelPrice.length),0),
+            worthData:[] = _.fill(Array(levelPrice.length),0),
+          };
+          let yData = JSON.parse(JSON.stringify(levelPrice));
+          _.reverse(yData);
+          chartData.yData = yData;
+          for(let i = 0 ;  i< dealData.length ; i++){
+            for(let j = 0 ; j < yData.length ; j++){
+              if((gridLevelPrice(dealData[i])) === yData[j]){
+                if(dealData[i].type === 1){
+                  chartData.commonData[j] += dealData[i].amount;
+                } else {
+                  chartData.worthData[j] += dealData[i].amount;
+                }
+                continue;
+              }
+            }
+          }
+					resolve(chartData);
+				});
+			});
+		})
+  }
 
 }
 
