@@ -135,14 +135,14 @@ let grid = {
 			MongoClient.connect(bdUrl, { useNewUrlParser: true },function (err, db) {
 				if (err) throw err;
 				const dbo = db.db(dbName);
-				let findStr = {'type':1};
+				let findStr = {'type':1,'sellPrice':undefined};
 				dbo.collection("grid").find(findStr).toArray(function (err, result) {
 					if (err) throw err;
           let dealData: Grid[] = result || [];
 					db.close();
 					let minGrid = dealData[0];
 					for(let i = 0 ; i < dealData.length ; i++) {
-						if (dealData[i].buyPrice < minGrid.buyPrice && dealData[i].sellPrice === undefined){
+						if (dealData[i].buyPrice < minGrid.buyPrice){
 							minGrid = dealData[i];
 						}
 					}
@@ -158,14 +158,14 @@ let grid = {
 			MongoClient.connect(bdUrl,{ useNewUrlParser: true }, function (err, db) {
 				if (err) throw err;
 				const dbo = db.db(dbName);
-				let findStr = {'type':1};
+				let findStr = {'type':1,'sellPrice':undefined};
 				dbo.collection("grid").find(findStr).toArray(function (err, result) {
 					if (err) throw err;
 					let dealData: Grid[] = result || [];
 					db.close();
 					let minGrid = dealData[0];
 					for(let i = 0 ; i < dealData.length ; i++) {
-						if (dealData[i].buyPrice < minGrid.buyPrice && dealData[i].sellPrice === undefined){
+						if (dealData[i].buyPrice < minGrid.buyPrice){
 							minGrid = dealData[i];
 						}
 					}
@@ -180,14 +180,14 @@ let grid = {
 			MongoClient.connect(bdUrl,{ useNewUrlParser: true }, function (err, db) {
 				if (err) throw err;
 				const dbo = db.db(dbName);
-				let findStr = {'type':1};
+				let findStr = {'type':1,'sellPrice':undefined};
 				dbo.collection("grid").find(findStr).toArray(function (err, result) {
 					if (err) throw err;
 					let dealData: Grid[] = result || [];
 					db.close();
 					let minGrid = dealData[0];
 					for(let i = 0 ; i < dealData.length ; i++) {
-						if (dealData[i].buyPrice < minGrid.buyPrice && dealData[i].sellPrice === undefined){
+						if (dealData[i].buyPrice < minGrid.buyPrice){
 							minGrid = dealData[i];
 						}
 					}
