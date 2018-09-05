@@ -5,6 +5,8 @@ import _grid_ from "./grid-db";
 // console.log(_grid_.getGridSellPrice());
 // console.log(_grid_.getNextGridPrice());
 
+import * as fs from 'fs';
+
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as cors from 'koa2-cors';
@@ -52,6 +54,10 @@ router.post('/signin', async (ctx, next) => {
     }
 });
 
+router.get('/demo', async (ctx, next) => {
+    ctx.response.type = 'html';
+    ctx.response.body = fs.createReadStream('./index.html');
+});
 
 /** 业务代码-开始 */
 
