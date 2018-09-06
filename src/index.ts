@@ -1,9 +1,4 @@
-// import num = require("./grid");
 import _grid_ from "./grid-db";
-// console.log(_grid_.getLevelPrice());
-// console.log(_grid_.getThisGrid());
-// console.log(_grid_.getGridSellPrice());
-// console.log(_grid_.getNextGridPrice());
 
 import * as fs from 'fs';
 
@@ -94,7 +89,19 @@ router.get('/getSellingGridChart', async (ctx, next) => {
         ctx.response.body = data;
     });
 });
+router.post('/setSellGrid', async (ctx, next) => {
+    const requestData = ctx.request.body || {};
+    let thisGrid = {};
+    await _grid_.getThisGrid().then(function(data){
+        thisGrid = data;
+    });
+    thisGrid.selling = requestData;
+    _grid_.setThisGridSelling(thisGrid).then(function (data) {
+    })
+    // console.info('--> request.body: ' , thisGrid);
+    ctx.response.body = thisGrid;
 
+});
 /** 业务代码-结束 */
 
 app.use(router.routes());

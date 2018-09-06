@@ -16,39 +16,63 @@
 
 <body>
   <div class="container">
-    <div class="card space-top">
+    <!-- <div class="card space-top">
       <h5 class="card-header">网格价格列表</h5>
       <div class="card-body">
         <p id="gridLevel"></p>
       </div>
-    </div>
+    </div> -->
     <div class="card space-top">
       <h5 class="card-header">当前网格</h5>
       <div class="card-body">
-        <p id="thisGridPrice">价格:</p>
-        <p id="thisGridAmount">数量:</p>
-        <p id="thisGridDate">日期:</p>
+        <div class="row">
+          <div class="col-sm">
+            <p id="thisGridPrice">价格:</p>
+            <p id="thisGridAmount">数量:</p>
+            <p id="thisGridDate">日期:</p>
+          </div>
+          <div class="col-sm">
+            <p id="nextPrice">(参考)入货价格:</p>
+            <p id="sellPrice">(参考)出货价格:</p>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">出货价格</span>
+          </div>
+          <input id="sellgrid_price" type="text" class="form-control" placeholder="请输入出货价格">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">出货时间</span>
+          </div>
+          <input id="sellgrid_date" type="text" class="form-control" placeholder="请输入出货时间">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">验证码</span>
+          </div>
+          <input id="sellgrid_code" type="text" class="form-control" placeholder="请输入验证码">
+        </div>
+        <button id="sellgrid_button" type="button" class="btn btn-primary">确定</button>
+      </div>
+      <div>
+
       </div>
     </div>
-    <div class="card space-top">
-      <h5 class="card-header">操作指南</h5>
-      <div class="card-body">
-        <p id="nextPrice">入货价格:</p>
-        <p id="sellPrice">出货价格:</p>
-      </div>
-    </div>
-    <div class="card space-top">
+    <!-- <div class="card space-top">
       <h5 class="card-header">网格总览</h5>
       <div class="card-body">
-        <!-- <div id="allGridChart" style="height: 300px;"></div> -->
+        <div id="allGridChart" style="height: 300px;"></div>
+      </div>
+    </div> -->
+    <div class="card space-top">
+      <h5 class="card-header">待出货网格总览</h5>
+      <div class="card-body">
+        <div id="sellingGridChart" style="height: 500px;"></div>
       </div>
     </div>
-    <div class="card space-top">
-        <h5 class="card-header">待出货网格总览</h5>
-        <div class="card-body">
-          <div id="sellingGridChart" style="height: 500px;"></div>
-        </div>
-      </div>    
     <div class="card space-top">
       <h5 class="card-header">入货操作</h5>
       <div class="card-body">
@@ -78,14 +102,14 @@
 <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
 <script>
-  const _ADDRESS_ = "http://132.232.142.128:8080"
-  //const _ADDRESS_ = "http://127.0.0.1:8080"
+  // const _ADDRESS_ = "http://132.232.142.128:8080"
+  const _ADDRESS_ = "http://127.0.0.1:8080"
   // console.info('_ADDRESS_:' , _ADDRESS_);
 
   // 待出货网格图表
   let domSellingGridChart = document.getElementById("sellingGridChart");
   let chartSellingGrid = echarts.init(domSellingGridChart);
-  
+
   // chartSellingGrid.setOption(optionSellingGrid, true);
   $.get(_ADDRESS_ + '/getLevelPrice', function (data) {
     console.info('--> getLevelPrice: ', data);
@@ -99,32 +123,33 @@
   });
   $.get(_ADDRESS_ + '/getGridSellPrice', function (data) {
     console.info('--> getGridSellPrice:  ', data);
-    let text = '出货价格: ' + data;
+    let text = '(参考)出货价格: ' + data;
     $("#sellPrice").text(text);
   });
   $.get(_ADDRESS_ + '/getNextGridPrice', function (data) {
     console.info('--> getNextGridPrice:  ', data);
-    let text = '入货价格: ' + data;
+    let text = '(参考)入货价格: ' + data;
     $("#nextPrice").text(text);
   });
   $.get(_ADDRESS_ + '/getAllGrid', function (data) {
     // console.info('--> getAllGrid:  ', data);
     // $("#allGrid").text(text);
   });
-  
+
   $.get(_ADDRESS_ + '/getSellingGrid', function (data) {
     console.info('--> getSellingGrid:  ', data);
     // $("#allGrid").text(text);
   });
 
+  // 图表数据处理及显示
   function drawChartSellingGrid() {
     let domSellingGridChart = document.getElementById("sellingGridChart");
     let chartSellingGrid = echarts.init(domSellingGridChart);
     let optionSellingGrid = {
       tooltip: {
         trigger: 'axis',
-        axisPointer: { 
-          type: 'shadow' 
+        axisPointer: {
+          type: 'shadow'
         }
       },
       legend: {
@@ -178,5 +203,21 @@
     });
   };
   drawChartSellingGrid();
+
+  // 
+  $("#sellgrid_button").click(function () {
+    $.post(_ADDRESS_ + '/setSellGrid', {
+      price:0.932,
+      date:'2018-10-10',
+      code:'S'
+    },function (data) {
+    console.info('--> getSellingGrid:  ', data);
+    // $("#allGrid").text(text);
+    });
+  })
+
+
+
+
 
 </script>
