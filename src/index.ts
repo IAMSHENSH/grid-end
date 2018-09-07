@@ -60,46 +60,49 @@ router.get('/getLevelPrice', async (ctx, next) => {
     ctx.response.body = _grid_.getLevelPrice();
 });
 router.get('/getAllGrid', async (ctx, next) => {
-    await _grid_.getAllGrid().then(function(data){
+    await _grid_.getAllGrid().then(function (data) {
         ctx.response.body = data;
     });
 });
 router.get('/getThisGrid', async (ctx, next) => {
-    await _grid_.getThisGrid().then(function(data){
+    await _grid_.getThisGrid().then(function (data) {
         ctx.response.body = data;
     });
 });
 router.get('/getGridSellPrice', async (ctx, next) => {
-    await _grid_.getGridSellPrice().then(function(data){
+    await _grid_.getGridSellPrice().then(function (data) {
         ctx.response.body = data;
     });
 });
 router.get('/getNextGridPrice', async (ctx, next) => {
-    await _grid_.getNextGridPrice().then(function(data){
+    await _grid_.getNextGridPrice().then(function (data) {
         ctx.response.body = data;
     });
 });
 router.get('/getSellingGrid', async (ctx, next) => {
-    await _grid_.getSellingGrid().then(function(data){
+    await _grid_.getSellingGrid().then(function (data) {
         ctx.response.body = data;
     });
 });
 router.get('/getSellingGridChart', async (ctx, next) => {
-    await _grid_.getSellingGridChart().then(function(data){
+    await _grid_.getSellingGridChart().then(function (data) {
         ctx.response.body = data;
     });
 });
 router.post('/setSellGrid', async (ctx, next) => {
     const requestData = ctx.request.body || {};
-    let thisGrid = {};
-    await _grid_.getThisGrid().then(function(data){
-        thisGrid = data;
-    });
-    thisGrid.selling = requestData;
-    _grid_.setThisGridSelling(thisGrid).then(function (data) {
-    })
-    // console.info('--> request.body: ' , thisGrid);
-    ctx.response.body = thisGrid;
+    console.info('-->requestData: ', requestData);
+    let thisGrid: any;
+    if (requestData.code !== '555') {
+        await _grid_.getThisGrid().then(function (data) {
+            thisGrid = data;
+        });
+        thisGrid.selling = requestData;
+        _grid_.setThisGridSelling(thisGrid).then(function (data) {})
+        ctx.response.body = thisGrid;
+    } else {
+        ctx.response.body = 'error code'
+    }
 
 });
 /** 业务代码-结束 */

@@ -207,12 +207,11 @@
   // 
   $("#sellgrid_button").click(function () {
     $.post(_ADDRESS_ + '/setSellGrid', {
-      price:0.932,
-      date:'2018-10-10',
-      code:'S'
+      price : $('#sellgrid_price').val(),
+      date : $('#sellgrid_date').val(),
+      code : $('#sellgrid_code').val()
     },function (data) {
     console.info('--> getSellingGrid:  ', data);
-    // $("#allGrid").text(text);
     });
   })
 
