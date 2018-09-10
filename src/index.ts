@@ -10,6 +10,8 @@ import * as bodyParser from 'koa-bodyparser';
 const app = new Koa();
 const router = new Router();
 
+const SAFE_CODE = '555';
+
 // log request URL:
 app.use(async (ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
@@ -93,7 +95,7 @@ router.post('/setSellGrid', async (ctx, next) => {
     const requestData = ctx.request.body || {};
     console.info('-->requestData: ', requestData);
     let thisGrid: any;
-    if (requestData.code !== '555') {
+    if (requestData.code === SAFE_CODE) {
         await _grid_.getThisGrid().then(function (data) {
             thisGrid = data;
         });
@@ -103,7 +105,18 @@ router.post('/setSellGrid', async (ctx, next) => {
     } else {
         ctx.response.body = 'error code'
     }
-
+});
+router.post('/setBugGrid', async (ctx, next) => {
+    const requestData = ctx.request.body || {};
+    console.info('-->requestData: ', requestData);
+    let thisGrid: any;
+    if (requestData.code === SAFE_CODE) {
+        thisGrid = requestData;
+        _grid_.setThisGridBuying(thisGrid).then(function (data) {})
+        ctx.response.body = thisGrid;
+    } else {
+        ctx.response.body = 'error code'
+    }
 });
 /** 业务代码-结束 */
 

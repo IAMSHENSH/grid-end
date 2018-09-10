@@ -284,25 +284,46 @@ let grid = {
     })
   },
   /** 设置出货网格 */
-  setThisGridSelling: function (_grid:any) {
+  setThisGridSelling: function (_grid: any) {
     return new Promise(function (resolve, reject) {
-      console.info('-->setThisGridSelling::' , _grid);
+      console.info('-->setThisGridSelling::', _grid);
       MongoClient.connect(bdUrl, {
         useNewUrlParser: true
       }, function (err, db) {
         if (err) throw err;
         const dbo = db.db(dbName);
         let findStr = {
-          'amount':_grid.amount,
+          'amount': _grid.amount,
           'buyPrice': _grid.buyPrice,
           'type': _grid.type,
-          'buyDate':_grid.buyDate
+          'buyDate': _grid.buyDate
         };
         let setSellGrid = {
-          sellDate:_grid.selling.date,
-          sellPrice:_grid.selling.price,
+          sellDate: _grid.selling.date,
+          sellPrice: _grid.selling.price,
         }
-        dbo.collection("grid").update(findStr,{$set:setSellGrid});
+        dbo.collection("grid").update(findStr, {
+          $set: setSellGrid
+        });
+        db.close();
+      });
+    })
+  },
+  setThisGridBuying: function (_grid: any) {
+    return new Promise(function (resolve, reject) {
+      MongoClient.connect(bdUrl, {
+        useNewUrlParser: true
+      }, function (err, db) {
+        if (err) throw err;
+        const dbo = db.db(dbName);
+        let grid = {
+          'type': parseInt(_grid.type),
+          'amount': parseInt(_grid.amount),
+          'buyDate': _grid.date,
+          'buyPrice': parseFloat(_grid.price)
+        };
+        console.info('-->setBuying::', grid);
+        dbo.collection("grid").insert(grid);
         db.close();
       });
     })
