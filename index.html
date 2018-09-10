@@ -61,38 +61,51 @@
 
       </div>
     </div>
-    <!-- <div class="card space-top">
-      <h5 class="card-header">网格总览</h5>
+
+    <div class="card space-top">
+      <h5 class="card-header">入货操作</h5>
       <div class="card-body">
-        <div id="allGridChart" style="height: 300px;"></div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">类型</span>
+          </div>
+          <input id="buygrid_type" type="number" class="form-control" placeholder="输入入货类型">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">价格</span>
+          </div>
+          <input id="buygrid_price" type="number" class="form-control" placeholder="输入入货价格">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">数量</span>
+          </div>
+          <input id="buygrid_amount" type="number" class="form-control" placeholder="输入入货数量">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">时间</span>
+          </div>
+          <input id="buygrid_date" type="text" class="form-control" placeholder="输入入货时间">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">验证码</span>
+          </div>
+          <input id="buygrid_code" type="text" class="form-control" placeholder="请输入验证码">
+        </div>
+        <button id="buygrid_button" type="button" class="btn btn-primary">确定</button>
+
       </div>
-    </div> -->
+    </div>
     <div class="card space-top">
       <h5 class="card-header">待出货网格总览</h5>
       <div class="card-body">
         <div id="sellingGridChart" style="height: 500px;"></div>
       </div>
     </div>
-    <div class="card space-top">
-      <h5 class="card-header">入货操作</h5>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">价格</label>
-            <input type="text" class="form-control" placeholder="输入入货价格">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">数量</label>
-            <input type="text" class="form-control" placeholder="输入入货数量">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">时间</label>
-            <input type="text" class="form-control" placeholder="输入入货时间">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-    </div>
+
   </div>
 </body>
 
@@ -204,19 +217,27 @@
   };
   drawChartSellingGrid();
 
-  // 
+  // 出货按钮
   $("#sellgrid_button").click(function () {
     $.post(_ADDRESS_ + '/setSellGrid', {
-      price : $('#sellgrid_price').val(),
-      date : $('#sellgrid_date').val(),
-      code : $('#sellgrid_code').val()
-    },function (data) {
-    console.info('--> getSellingGrid:  ', data);
+      price: $('#sellgrid_price').val(),
+      date: $('#sellgrid_date').val(),
+      code: $('#sellgrid_code').val()
+    }, function (data) {
+      console.info('--> getSellingGrid:  ', data);
     });
   })
 
-
-
-
-
+  // 入货按钮
+  $("#buygrid_button").click(function () {
+    $.post(_ADDRESS_ + '/setBugGrid', {
+      type: $('#buygrid_type').val(),
+      price: $('#buygrid_price').val(),
+      amount: $('#buygrid_amount').val(),
+      date: $('#buygrid_date').val(),
+      code: $('#buygrid_code').val()
+    }, function (data) {
+      console.info('--> setBugGrid:  ', data);
+    });
+  })
 </script>
