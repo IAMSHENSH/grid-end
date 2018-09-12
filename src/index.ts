@@ -87,6 +87,11 @@ router.get('/getSellingGridChart', async (ctx, next) => {
     ctx.response.body = data;
   });
 });
+router.get('/getSoldGrid', async (ctx, next) => {
+  await _grid_.getSoldGrid().then(function (data) {
+    ctx.response.body = data;
+  });
+});
 router.post('/setSellGrid', async (ctx, next) => {
   const requestData = ctx.request.body || {};
   console.info('-->requestData: ', requestData);

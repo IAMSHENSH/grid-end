@@ -327,6 +327,24 @@ let grid = {
         db.close();
       });
     })
+  },
+  getSoldGrid : function(){
+    return new Promise(function (resolve, reject) {
+      MongoClient.connect(bdUrl, {
+        useNewUrlParser: true
+      }, function (err, db) {
+        if (err) throw err;
+        const dbo = db.db(dbName);
+        let findStr = {
+          'sellPrice': {$ne:undefined} 
+        };
+        dbo.collection("grid").find(findStr).toArray(function (err, result) {
+          if (err) throw err;
+          resolve(result);
+          db.close();
+        });
+      });
+    })    
   }
 }
 
